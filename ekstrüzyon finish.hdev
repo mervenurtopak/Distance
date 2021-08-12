@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="17.12">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (edg, 'F:/Visiomex/ekstrüzyon/1.tif')</l>
+<l>get_image_size (edg, Width, Height)</l>
+<l>dev_close_window ()</l>
+<l>dev_open_window (0, 0, Width/5, Height/5, 'black', WindowID)</l>
+<l>set_display_font (WindowID, 14, 'mono', 'true', 'false')</l>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_line_width (3)</l>
+<l>dev_display (edg)</l>
+<l>disp_continue_message (WindowID, 'black', 'true')</l>
+<l>gen_rectangle1 (ROI_0, 1430.05, 1881.58, 1780.22, 2031.73) </l>
+<l>* gen_rectangle2 (ROI_0, 2094.69, 2048.71, rad(-76.381), 601.595, 58.753)</l>
+<l>Row := 1430.51</l>
+<l>Column := 1881.71</l>
+<l>Length1 :=  1780.595</l>
+<l>Length2 := 2031.753</l>
+<c></c>
+<l>Angle :=  rad(0)</l>
+<c></c>
+<c> </c>
+<c></c>
+<l>gen_measure_rectangle2 (Row,Column,Angle, Length1,Length2, Width, Height, 'bilinear', MeasureHandle)</l>
+<l>reduce_domain (edg, ROI_0, ImageReduced)</l>
+<l>dev_display (ROI_0)</l>
+<l>disp_continue_message (WindowID, 'black', 'true')</l>
+<l>stop ()</l>
+<c></c>
+<c></c>
+<l>edges_sub_pix (ImageReduced, Edges, 'canny', 4, 4, 4)</l>
+<l>select_contours_xld (Edges, SelectedContours, 'contour_length', 0.5, 20000, -0.5, 0.5)</l>
+<l>gen_region_contour_xld (SelectedContours, Region, 'filled')</l>
+<c></c>
+<l>select_obj (Region, ObjectSelected, 1)</l>
+<l>select_obj (Region, ObjectSelected1, 2)</l>
+<l>distance_rr_min (ObjectSelected, ObjectSelected1, MinDistance, Row1, Column1, Row2, Column2)</l>
+<c></c>
+<l>gen_region_line (RegionLines, Row1, Column1, Row2, Column2)</l>
+<c></c>
+<l>select_obj (SelectedContours, ObjectSelected2, 1)</l>
+<l>select_obj (SelectedContours, ObjectSelected3, 2)</l>
+<l>distance_cc_min (ObjectSelected2, ObjectSelected3, 'fast_point_to_segment', DistanceMin)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
